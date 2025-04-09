@@ -22,10 +22,15 @@ service = QiskitRuntimeService(channel="ibm_quantum")
 backend = service.least_busy(operational=True, simulator=False, min_num_qubits=127)
 print(backend.name)
 
+# Setup circuit
 theta = Parameter("$\\theta$")
-
 chsh_circuit = QuantumCircuit(2)
 chsh_circuit.h(0)
 chsh_circuit.cx(0, 1)
 chsh_circuit.ry(theta, 0)
 chsh_circuit.draw(output="mpl", idle_wires=False, style="iqp")
+
+# Save the circuit as an image
+fig = chsh_circuit.draw(output="mpl", idle_wires=False, style="iqp")
+fig.savefig('bell_inequality.png')
+
