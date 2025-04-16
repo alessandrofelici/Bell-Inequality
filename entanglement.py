@@ -42,6 +42,8 @@ chsh_circuit = QuantumCircuit(2)
 chsh_circuit.h(0)
 chsh_circuit.cx(0, 1)
 chsh_circuit.ry(theta, 0)
+fig = chsh_circuit.draw(output="mpl", idle_wires=False, style="iqp")
+fig.savefig('bell_inequality.png')
 
 # ISA Optimized Circuit
 chsh_isa_circuit = pm.run(chsh_circuit)
@@ -50,7 +52,7 @@ isa_observable2 = observable2.apply_layout(layout=chsh_isa_circuit.layout)
 
 # Save the circuit as an image
 fig = chsh_isa_circuit.draw(output="mpl", idle_wires=False, style="iqp")
-fig.savefig('bell_inequality.png')
+fig.savefig('bell_inequality_optimized.png')
 
 # Execute using Qiskit primitives
 estimator = Estimator(mode=backend)
@@ -90,7 +92,6 @@ ax.xaxis.set_major_locator(tck.MultipleLocator(base=0.5))
 plt.xlabel("Theta")
 plt.ylabel("CHSH witness")
 plt.legend()
-plt.show()
 
 # Save as png
 fig.savefig('results_graph.png')
